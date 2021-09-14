@@ -1,11 +1,11 @@
 # Pipedream Actions
 
 
-### Install pd CLI
+## Installation
 
-Follow the instructions https://pipedream.com/docs/cli/install/
+1. Follow the instructions to install the `pd` command-line CLI https://pipedream.com/docs/cli/install/
 
-### Install actions
+2. Install actions
 
 ```
 pd publish src/subscribe/subscribe.js
