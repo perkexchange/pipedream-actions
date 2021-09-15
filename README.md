@@ -11,7 +11,3 @@
 pd publish src/subscribe/subscribe.js
 pd publish src/unsubscribe/unsubscribe.js
 ```
-
-## Configuration
-
-TODO
