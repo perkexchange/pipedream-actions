@@ -4,37 +4,42 @@ module.exports = {
   name: "Unsubscribe a user",
   description: "Unsubscribes a user from a campaign",
   key: "perkexchange-unsubscribe-action",
-  version: "0.0.1",
+  version: "0.0.6",
   type: "action",
   props: {
     email: {
       type: "string",
       label: "Email",
     },
+    campaignSecret: {
+      type: "string",
+      label: "Campaign secret",
+      secret: true,
+    },
+    domain: {
+      type: "string",
+      label: "Target domain",
+      default: "https://perk.exchange",
+    },
   },
   async run() {
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PERKEXCHANGE_CAMPAIGNSECRET}`,
+      Authorization: `Bearer ${this.campaignSecret}`,
     };
 
-    let domain = process.env.PERKEXCHANGE_DOMAIN || "https://perk.exchange";
-
-    axios
-      .delete(
-        `${domain}/api/rewards`,
-        {
+    try {
+      await axios.delete(`${this.domain}/api/rewards`, {
+        headers: headers,
+        data: {
           email: this.email,
         },
-        {
-          headers: headers,
-        }
-      )
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        throw new Error("Unexpected error ", error);
       });
+      return {
+        success: true,
+      };
+    } catch (e) {
+      throw Error(e.message);
+    }
   },
 };
